@@ -41,7 +41,7 @@ mkdir="mkdir -p"
 download="curl -sLO"
 extract="$tar -C $BUILD_DIR --wildcards -f"
 verify="sha1sum --check --warn"
-configure='sed -i s/^\x23\x20\(elasticsearch.url:\x20\).\{1,\}/\1"'$(echo $ELASTICSEARCH_URL | sed 's/\//\\\//g')'"/'
+configure='sed -i s/^\x23\(elasticsearch.url:\x20\).\{1,\}/\1"'$(echo $ELASTICSEARCH_URL | sed 's/\//\\\//g')'"/'
 
 
 echo "-----> Installing Kibana..."
@@ -59,7 +59,7 @@ if [ ! -f "$CACHE_DIR/$KIBANA_PACKAGE" ]; then
   echo "$(cat ${KIBANA_PACKAGE}.sha1) *${KIBANA_PACKAGE}" > ${KIBANA_PACKAGE}.sha1
   echo "Contents of the SHA1: " | indent
   cat ${KIBANA_PACKAGE}.sha1
-  
+
   $verify "${KIBANA_PACKAGE}.sha1"
 
   if [ $? -eq 0 ]; then
@@ -73,6 +73,7 @@ $extract $CACHE_DIR/$KIBANA_PACKAGE
 
 echo "-----> Configuring ELASTICSEARCH_URL"
 $configure $KIBANA_DIR/config/kibana.yml
+echo "$(grep 'elasticsearch.url' $KIBANA_DIR/config/kibana.yml)" | indent
 
 echo "Exporting PATH" | indent
 echo 'export PATH="$PATH:'${KIBANA_DIR##*/}'/bin"' > $INIT_SCRIPT
