@@ -56,6 +56,7 @@ verify="sha1sum --check --warn"
 configure='sed -i s/^\x23\(elasticsearch.url:\x20\).\{1,\}/\1"'$(echo $ELASTICSEARCH_URL | sed 's/\//\\\//g')'"/'
 configure_user='sed -i s/^\x23\(elasticsearch.username:\x20\).\{1,\}/\1"'$(echo $UNAME | sed 's/\//\\\//g')'"/'
 configure_pass='sed -i s/^\x23\(elasticsearch.password:\x20\).\{1,\}/\1"'$(echo $PWORD | sed 's/\//\\\//g')'"/'
+configure_host='sed -i s/^\x23\(server.host:\x20\).\{1,\}/\10.0.0.0/'
 show_config='egrep "^\[^\x23\]"'
 
 echo "-----> Installing Kibana..."
@@ -87,6 +88,7 @@ $extract $CACHE_DIR/$KIBANA_PACKAGE
 
 echo "-----> Configuring ELASTICSEARCH_URL"
 $configure $KIBANA_DIR/config/kibana.yml
+$configure_host $KIBANA_DIR/config/kibana.yml
 echo "$(grep 'elasticsearch.url' $KIBANA_DIR/config/kibana.yml)" | indent
 if [ ! -z "$(echo $ELASTICSEARCH_URL | egrep '://[a-zA-Z0-9]{1,}:[a-zA-Z0-9]{1,}@')" ]; then
   echo "Updating the authentication credentials" | indent
