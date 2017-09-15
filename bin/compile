@@ -54,8 +54,8 @@ download="curl -sLO"
 extract="$tar -C $BUILD_DIR --wildcards -f"
 verify="sha1sum --check --warn"
 configure='sed -i s/^\x23\(elasticsearch.url:\x20\).\{1,\}/\1"'$(echo $ELASTICSEARCH_URL | sed 's/\//\\\//g')'"/'
-configure_user='sed -i s/^\x23\x20\(elasticsearch.username:\x20\).\{1,\}/\1"'$(echo $UNAME | sed 's/\//\\\//g')'"/'
-configure_pass='sed -i s/^\x23\x20\(elasticsearch.password:\x20\).\{1,\}/\1"'$(echo $PWORD | sed 's/\//\\\//g')'"/'
+configure_user='sed -i s/^\x23\(elasticsearch.username:\x20\).\{1,\}/\1"'$(echo $UNAME | sed 's/\//\\\//g')'"/'
+configure_pass='sed -i s/^\x23\(elasticsearch.password:\x20\).\{1,\}/\1"'$(echo $PWORD | sed 's/\//\\\//g')'"/'
 
 echo "-----> Installing Kibana..."
 
