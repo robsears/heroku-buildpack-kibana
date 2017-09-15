@@ -95,7 +95,7 @@ if [ ! -z "$(echo $ELASTICSEARCH_URL | egrep '://[a-zA-Z0-9]{1,}:[a-zA-Z0-9]{1,}
 fi
 
 echo "Configuration settings applied:" | indent
-$show_config $KIBANA_DIR/config/kibana.yml
+echo "$(egrep '^[^#]' $KIBANA_DIR/config/kibana.yml)" | indent
 
 echo "Exporting PATH" | indent
 echo 'export PATH="$PATH:'${KIBANA_DIR##*/}'/bin"' > $INIT_SCRIPT
